@@ -11,15 +11,17 @@ spring:
   jpa:
     properties:
       hibernate:
-        ddl-auto: create
-        format-sql: true
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        ddl-auto: create
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
     show-sql: true
     generate-ddl: true
     open-in-view: false
 
 logging.level:
-  org.hibernate.SQL: debug
+  org.hibernate.type.descriptor.sql: TRACE
   org.springframework:
     security: DEBUG
   root: info
