@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://52.78.80.77:3306/donkey?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8
+    username: root
+    password: donkey!@#
+
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: create
+        format-sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    generate-ddl: true
+    open-in-view: false
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.springframework:
+    security: DEBUG
+  root: info
