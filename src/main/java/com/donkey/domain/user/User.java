@@ -3,6 +3,7 @@ package com.donkey.domain.user;
 import com.donkey.domain.BaseEntity;
 import com.donkey.domain.community.Major;
 import com.donkey.domain.community.University;
+import com.donkey.domain.enums.AuthProvider;
 import com.donkey.domain.enums.UserType;
 import com.donkey.domain.post.Post;
 import lombok.*;
@@ -28,7 +29,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    private String uId; // ªÁøÎ¿⁄ æ∆¿Ãµ
+    private String uId; // ÏÇ¨Ïö©Ïûê id
     private String password;
     private String profilePicture;
     private String address;
@@ -37,7 +38,10 @@ public class User extends BaseEntity {
     private int score;
 
     @Enumerated(EnumType.STRING)
-    private UserType userType;
+    private UserType userType = UserType.UNCERTIFIED;
+
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider = AuthProvider.LOCAL;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "university_id")
@@ -53,23 +57,55 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
-
     @Builder
-    public User(String email, String password, String profilePicture, String uId, String location, String introduction) {
+    public User(String email, String name, String uId, String password, String profilePicture, String address, String introduction, String fcmToken, int score, UserType userType, AuthProvider authProvider) {
         this.email = email;
+        this.name = name;
+        this.uId = uId;
         this.password = password;
         this.profilePicture = profilePicture;
-        this.uId = uId;
-        this.address = location;
+        this.address = address;
         this.introduction = introduction;
+        this.fcmToken = fcmToken;
+        this.score = score;
+        this.userType = userType;
+        this.authProvider = authProvider;
     }
 
-    public String getUserType() {
-        return this.userType.getValue();
+
+    public User update(User entity) {
+        if (entity.getName() != null)
+            this.name = entity.getName();
+        if (entity.getUId() != null)
+            this.uId = entity.getUId();
+        if (entity.getPassword() != null)
+            this.password = entity.getPassword();
+        if (entity.getProfilePicture() != null)
+            this.profilePicture = entity.getProfilePicture();
+        if (entity.getAddress() != null)
+            this.address = entity.getAddress();
+        if (entity.getIntroduction() != null)
+            this.introduction = entity.getIntroduction();
+        if (entity.getFcmToken() != null)
+            this.fcmToken = entity.getFcmToken();
+
+        return this;
+    }
+
+    public void updateScore(int score) {
+        this.score = score;
     }
 
     public void updateFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+
+    public String getUserTypeKey() {
+        return this.userType.getKey();
+    }
+
+    public void universityCertified() {
+        this.userType = UserType.CERTIFIED;
     }
 
 

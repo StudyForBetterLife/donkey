@@ -2,6 +2,13 @@ server:
   port: 8081
 
 spring:
+  data:
+    rest:
+      base-path: /api
+
+  profiles:
+    include: oauth
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://52.78.80.77:3306/donkey?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8
@@ -19,6 +26,11 @@ spring:
     show-sql: true
     generate-ddl: true
     open-in-view: false
+
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
 
 logging.level:
   org.hibernate.type.descriptor.sql: TRACE

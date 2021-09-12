@@ -10,14 +10,14 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
-@MappedSuperclass // 엔티티의 상위 클래스가 된다
-@EntityListeners(AuditingEntityListener.class) // Auditing 기능 포함
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
-    @CreatedDate // 엔티티가 생성되어 저장될 떄의 시간이 자동 저장
+    @CreatedDate
     private LocalDateTime createdDate;
 
-    @LastModifiedDate // 조회한 엔티티의 값을 변경할 떄의 시간이 자동 저장
+    @LastModifiedDate
     private LocalDateTime modifiedDate;
 
     @Enumerated(EnumType.STRING)

@@ -5,9 +5,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum Status {
-    NORMAL("NORMAL","일반"),
-    DELETE("DELETE","삭제");
+public enum AuthProvider {
+    LOCAL("LOCAL", "LOCAL"),
+    APPLE("APPLE", "APPLE"),
+    NAVER("NAVER", "NAVER"),
+    GOOGLE("GOOGLE", "GOOGLE"),
+    KAKAO("KAKAO", "KAKAO");
 
     private final String key;
     private final String value;

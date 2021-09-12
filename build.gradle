@@ -19,13 +19,26 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.20'
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:2.7.3'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.5.4'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+    // spring-boot-starter
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-security:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-mail:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-mustache:2.5.4'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.4'
 
+    // JWT
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
     // mariadb
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:2.7.3'
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.3'
 
     // spring data JPA
