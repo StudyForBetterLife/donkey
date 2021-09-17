@@ -3,8 +3,6 @@ package com.donkey.domain.user;
 import com.donkey.domain.BaseEntity;
 import com.donkey.domain.community.Major;
 import com.donkey.domain.community.University;
-import com.donkey.domain.enums.AuthProvider;
-import com.donkey.domain.enums.UserType;
 import com.donkey.domain.post.Post;
 import lombok.*;
 
@@ -13,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class User extends BaseEntity {
@@ -31,17 +28,22 @@ public class User extends BaseEntity {
 
     private String uId; // 사용자 id
     private String password;
-    private String profilePicture;
-    private String address;
+    private String imageUrl;
     private String introduction;
     private String fcmToken;
     private int score;
+
+    @Embedded
+    private Address address;
+
+    @Embedded
+    private UniversityInfo universityInfo;
 
     @Enumerated(EnumType.STRING)
     private UserType userType = UserType.UNCERTIFIED;
 
     @Enumerated(EnumType.STRING)
-    private AuthProvider authProvider = AuthProvider.LOCAL;
+    private AuthProvider authProvider = AuthProvider.local;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "university_id")
@@ -58,12 +60,12 @@ public class User extends BaseEntity {
     private List<Post> posts = new ArrayList<>();
 
     @Builder
-    public User(String email, String name, String uId, String password, String profilePicture, String address, String introduction, String fcmToken, int score, UserType userType, AuthProvider authProvider) {
+    public User(String email, String name, String uId, String password, String imageUrl, Address address, String introduction, String fcmToken, int score, UserType userType, AuthProvider authProvider) {
         this.email = email;
         this.name = name;
         this.uId = uId;
         this.password = password;
-        this.profilePicture = profilePicture;
+        this.imageUrl = imageUrl;
         this.address = address;
         this.introduction = introduction;
         this.fcmToken = fcmToken;
@@ -80,8 +82,8 @@ public class User extends BaseEntity {
             this.uId = entity.getUId();
         if (entity.getPassword() != null)
             this.password = entity.getPassword();
-        if (entity.getProfilePicture() != null)
-            this.profilePicture = entity.getProfilePicture();
+        if (entity.getImageUrl() != null)
+            this.imageUrl = entity.getImageUrl();
         if (entity.getAddress() != null)
             this.address = entity.getAddress();
         if (entity.getIntroduction() != null)

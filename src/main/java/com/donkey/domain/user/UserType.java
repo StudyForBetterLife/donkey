@@ -1,13 +1,13 @@
-package com.donkey.domain.enums;
+package com.donkey.domain.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum Status {
-    NORMAL("NORMAL","일반"),
-    DELETE("DELETE","삭제");
+public enum UserType {
+    UNCERTIFIED("UNCERTIFIED","UNCERTIFIED"),
+    CERTIFIED("CERTIFIED","CERTIFIED");
 
     private final String key;
     private final String value;

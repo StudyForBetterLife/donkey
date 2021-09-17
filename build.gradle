@@ -47,6 +47,18 @@ dependencies {
     // Swagger 2
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+    // JUnit4 추가
+    testImplementation("org.junit.vintage:junit-vintage-engine") {
+        exclude group: "org.hamcrest", module: "hamcrest-core"
+    }
+
+    // 쿼리 파라미터 바인딩 로그 남기기
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
+
+    // javax.validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 }
 
 test {

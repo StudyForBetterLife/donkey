@@ -1,7 +1,7 @@
-package com.donkey.config.auth.dto;
+package com.donkey.security.oauth2.dto;
 
-import com.donkey.domain.enums.AuthProvider;
-import com.donkey.domain.enums.UserType;
+import com.donkey.domain.user.AuthProvider;
+import com.donkey.domain.user.UserType;
 import com.donkey.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +16,7 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String profilePicture;
-    private AuthProvider authProvider = AuthProvider.LOCAL;
+    private AuthProvider authProvider;
 
     @Builder
     public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String profilePicture, AuthProvider authProvider) {
@@ -53,7 +53,7 @@ public class OAuthAttributes {
                 .email((String) kakaoAccount.get("email"))
                 .profilePicture((String) kakaoProfile.get("profile_image_url"))
                 .attributes(attributes)
-                .authProvider(AuthProvider.KAKAO)
+                .authProvider(AuthProvider.kakao)
                 .nameAttributeKey("id")
                 .build();
     }
@@ -64,7 +64,7 @@ public class OAuthAttributes {
                 .email((String) attributes.get("email"))
                 .profilePicture((String) attributes.get("picture"))
                 .attributes(attributes)
-                .authProvider(AuthProvider.GOOGLE)
+                .authProvider(AuthProvider.google)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
@@ -77,7 +77,7 @@ public class OAuthAttributes {
                 .email((String) response.get("email"))
                 .profilePicture((String) response.get("profile_image"))
                 .attributes(response)
-                .authProvider(AuthProvider.NAVER)
+                .authProvider(AuthProvider.naver)
                 .nameAttributeKey("id")
                 .build();
     }
@@ -90,7 +90,7 @@ public class OAuthAttributes {
         return User.builder()
                 .name(name)
                 .email(email)
-                .profilePicture(profilePicture)
+                .imageUrl(profilePicture)
                 .userType(UserType.UNCERTIFIED)
                 .authProvider(authProvider)
                 .build();

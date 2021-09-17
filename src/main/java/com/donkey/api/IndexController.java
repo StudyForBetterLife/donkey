@@ -1,14 +1,12 @@
-package com.donkey.client;
+package com.donkey.api;
 
-import com.donkey.config.auth.LoginUser;
-import com.donkey.config.auth.dto.SessionUser;
-import lombok.NoArgsConstructor;
+import com.donkey.security.LoginUser;
+import com.donkey.security.oauth2.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +20,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
         if (user != null) {
+            log.error("user = "+ user.getName());
             model.addAttribute("userName", user.getName());
         }
 

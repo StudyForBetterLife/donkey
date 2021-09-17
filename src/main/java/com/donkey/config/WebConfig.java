@@ -1,6 +1,6 @@
 package com.donkey.config;
 
-import com.donkey.config.auth.LoginUserArgumentResolver;
+import com.donkey.security.LoginUserArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,6 @@ public class WebConfig implements WebMvcConfigurer {
                 // CORS 적용할 URL 패턴
                 .addMapping("/**")
                 // 자원을 공유할 오리진 지정
-                .allowedOrigins("http://localhost:8080")
                 .allowedOrigins("http://localhost:8081")
                 // 요청 허용 메서드
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")

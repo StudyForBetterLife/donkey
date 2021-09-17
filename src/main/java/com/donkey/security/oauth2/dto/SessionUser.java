@@ -1,4 +1,4 @@
-package com.donkey.config.auth.dto;
+package com.donkey.security.oauth2.dto;
 
 import com.donkey.domain.user.User;
 import lombok.Builder;
@@ -16,6 +16,7 @@ import java.io.Serializable;
 @Getter
 public class SessionUser implements Serializable {
     private boolean isExited;
+    private Long id;
     private String name;
     private String email;
     private String profilePicture;
@@ -23,15 +24,17 @@ public class SessionUser implements Serializable {
     @Builder
     public SessionUser(User user) {
         this.isExited = true;
+        this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
-        this.profilePicture = user.getProfilePicture();
+        this.profilePicture = user.getImageUrl();
     }
 
     @Override
     public String toString() {
         return "SessionUser{" +
                 "isExited=" + isExited +
+                ", id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", profilePicture='" + profilePicture + '\'' +

@@ -1,7 +1,8 @@
-package com.donkey.config.auth;
+package com.donkey.security;
 
-import com.donkey.config.auth.dto.SessionUser;
+import com.donkey.security.oauth2.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -10,7 +11,9 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Parameter;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 // LoginUserArgumentResolver가 스프링에서 인식될 수 있도록 WebMvcConfigurer 에 추가한다.
@@ -38,7 +41,9 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
                                   ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest,
                                   WebDataBinderFactory binderFactory) throws Exception {
-
-        return httpSession.getAttribute("user");
+        log.error("parameter.getParameter() = " + parameter.getParameter());
+        log.error("parameter.getParameterName() = " + parameter.getParameterName());
+        log.error("httpSession.getAttribute('user') = " + httpSession.getAttribute(parameter.getParameterName()));
+        return httpSession.getAttribute(parameter.getParameterName());
     }
 }

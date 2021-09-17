@@ -9,7 +9,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class ImageFile extends BaseEntity {
