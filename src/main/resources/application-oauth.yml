@@ -1,0 +1,27 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            # REST API 키 입력
+            client-id: 31000656147db534cdde297d59e45e58
+            # yaml 에서는 / (슬러시)를 그대로 쓰면 파싱 에러가 난다. 따옴표나 작은 따옴표로 감싸주도록 하자.
+            # http://localhost:8081/login/oauth2/code/kakao
+            redirect_uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization_grant_type: authorization_code
+            scope: profile_nickname, profile_image, account_email
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-info-authentication-method: POST
+
+app:
+  auth:
+    tokenSecret: 426DD75C91130KD5TR27GBXNC0954C
+    tokenExpirationMsec: 864000000
+  oauth2:
+    authorized-redirect-uris: http://localhost:8081/oauth2/redirect
