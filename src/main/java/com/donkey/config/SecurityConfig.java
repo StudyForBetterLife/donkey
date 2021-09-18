@@ -79,12 +79,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
-                .and()
+//                .cors()
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
                 .csrf().disable()
                 .headers().frameOptions().disable()
 
@@ -95,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // antMatchers
                 // 권한 관리 대상을 지정하는 옵션이다.
                 // URL, HTTP 메소드별로 관리가 가능하다. 지정된 URL들은 permitAll() 옵션을 통해 전체 열람 관한을 준다.
-                .antMatchers("/").permitAll()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/api/**").hasAnyRole(UserType.CERTIFIED.getValue(), UserType.UNCERTIFIED.getValue())
                 .antMatchers("/socket-endpoint/**").permitAll()
                 .antMatchers("/oauth/**", "/oauth2/**", "/login/**").permitAll()
@@ -122,12 +121,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // userService
                 // 소셜 로그인 성공시 후속 조치를 진행할 UserService 인터페이스의 구현체를 등록한다.
                 // 리소스 서버(소셜 서비스들)에서 사용자 정보를 가져온 상태에서 추가로 진행하고자하는 기능을 명시할 수 있다.
-                .userService(customOAuth2UserService)
+                .userService(customOAuth2UserService);
 
-                .and()
-                .successHandler(oAuth2AuthenticationSuccessHandler)
-                .failureHandler(oAuth2AuthenticationFailureHandler);
-
-        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+//                .and()
+//                .successHandler(oAuth2AuthenticationSuccessHandler)
+//                .failureHandler(oAuth2AuthenticationFailureHandler);
+//        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

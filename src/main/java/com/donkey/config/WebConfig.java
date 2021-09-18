@@ -27,6 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
                 // CORS 적용할 URL 패턴
                 .addMapping("/**")
                 // 자원을 공유할 오리진 지정
+                .allowedOrigins("http://52.78.80.77:8081")
                 .allowedOrigins("http://localhost:8081")
                 // 요청 허용 메서드
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")

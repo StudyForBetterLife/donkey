@@ -188,7 +188,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .email(oAuth2UserInfo.getEmail())
                 .imageUrl(oAuth2UserInfo.getImageUrl())
                 .authProvider(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))
-                .uId(oAuth2UserInfo.getId())
+                .usrId(oAuth2UserInfo.getId())
                 .build()
         );
     }

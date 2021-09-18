@@ -91,7 +91,6 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .imageUrl(profilePicture)
-                .userType(UserType.UNCERTIFIED)
                 .authProvider(authProvider)
                 .build();
     }

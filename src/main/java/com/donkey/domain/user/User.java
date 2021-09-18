@@ -26,8 +26,12 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    private String uId; // 사용자 id
+    private String nickName;
+    private String usrId; // 사용자 id
     private String password;
+
+    @Column(nullable = false)
+    private String telNum;
     private String imageUrl;
     private String introduction;
     private String fcmToken;
@@ -60,17 +64,19 @@ public class User extends BaseEntity {
     private List<Post> posts = new ArrayList<>();
 
     @Builder
-    public User(String email, String name, String uId, String password, String imageUrl, Address address, String introduction, String fcmToken, int score, UserType userType, AuthProvider authProvider) {
+    public User(String email, String name, String nickName, String usrId, String password, String telNum, String imageUrl, String introduction, String fcmToken, int score, Address address, UniversityInfo universityInfo, AuthProvider authProvider) {
         this.email = email;
         this.name = name;
-        this.uId = uId;
+        this.nickName = nickName;
+        this.usrId = usrId;
         this.password = password;
+        this.telNum = telNum;
         this.imageUrl = imageUrl;
-        this.address = address;
         this.introduction = introduction;
         this.fcmToken = fcmToken;
         this.score = score;
-        this.userType = userType;
+        this.address = address;
+        this.universityInfo = universityInfo;
         this.authProvider = authProvider;
     }
 
@@ -78,8 +84,8 @@ public class User extends BaseEntity {
     public User update(User entity) {
         if (entity.getName() != null)
             this.name = entity.getName();
-        if (entity.getUId() != null)
-            this.uId = entity.getUId();
+        if (entity.getUsrId() != null)
+            this.usrId = entity.getUsrId();
         if (entity.getPassword() != null)
             this.password = entity.getPassword();
         if (entity.getImageUrl() != null)
@@ -92,6 +98,10 @@ public class User extends BaseEntity {
             this.fcmToken = entity.getFcmToken();
 
         return this;
+    }
+
+    public void updatePassword(String password) {
+        this.password = password;
     }
 
     public void updateScore(int score) {
