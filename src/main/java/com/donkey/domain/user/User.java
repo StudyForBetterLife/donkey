@@ -73,9 +73,9 @@ public class User extends BaseEntity {
         this.telNum = telNum;
         this.imageUrl = imageUrl;
         this.introduction = introduction;
-        this.fcmToken = fcmToken;
         this.score = score;
         this.address = address;
+        this.fcmToken = fcmToken;
         this.universityInfo = universityInfo;
         this.authProvider = authProvider;
     }

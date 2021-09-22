@@ -5,10 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class BaseReq extends BaseDto{
+public class BaseRes extends BaseDto{
 
     @Builder
-    public BaseReq(boolean success, String message) {
+    public BaseRes(boolean success, String message) {
         super(success, message);
     }
 

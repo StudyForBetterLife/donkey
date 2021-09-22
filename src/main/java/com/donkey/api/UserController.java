@@ -10,6 +10,8 @@ import com.donkey.util.mail.MailService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,24 @@ public class UserController {
     private final UserService userService;
     private final EncryptHelper encryptHelper;
     private final MailService mailService;
+
+    @GetMapping
+    @ApiOperation(value = "유저 프로필 리스트 (페이징)", notes = "요청 파라미터 예시 : /api/users?page=0&size=3&sort=id,desc&sort=username,desc")
+    public Page<UserProfileRes> getAllUserProfile(Pageable pageable) {
+        Page<User> all = userService.findAllPage(pageable);
+        return all.map(UserProfileRes::new);
+    }
+
+    @PostMapping("/profile")
+    @ApiOperation(value = "유저 프로필 (한 명)")
+    public Result<UserProfileRes> getProfile(@RequestBody UserProfileReq req) {
+        Optional<User> optionalUser = userService.findByEmail(req.getEmail());
+        if (optionalUser.isEmpty()) {
+            return new Result<>(false, "존재하지 않는 유저입니다.", null);
+        }
+        User user = optionalUser.get();
+        return new Result<>(true,"유저 조회 성공", new UserProfileRes(user));
+    }
 
     @PostMapping("/register")
     public CreateUserRes register(@RequestBody CreateUserReq req) {
@@ -64,20 +84,20 @@ public class UserController {
 
     @GetMapping("/register/{email}")
     @ApiOperation(value = "이메일 중복확인")
-    public BaseReq checkEmail(@PathVariable("email") String email) {
+    public BaseRes checkEmail(@PathVariable("email") String email) {
         boolean exists = userService.existsByEmail(email);
         String message = exists ? "이미 존재하는 이메일입니다." : "사용 가능한 이메일입니다.";
-        return BaseReq.builder()
+        return BaseRes.builder()
                 .success(!exists)
                 .message(message)
                 .build();
     }
 
     @PostMapping("/login")
-    public BaseReq login(@RequestBody LoginUserReq req) {
+    public BaseRes login(@RequestBody LoginUserReq req) {
         Optional<User> optionalUser = userService.findByEmail(req.getEmail());
         if (optionalUser.isEmpty()) {
-            return BaseReq.builder()
+            return BaseRes.builder()
                     .success(false)
                     .message("존재하지 않는 이메일입니다.")
                     .build();
@@ -86,13 +106,13 @@ public class UserController {
         User user = optionalUser.get();
         boolean isCorrect = encryptHelper.isMatch(req.getPassword(), user.getPassword());
         if (!isCorrect) {
-            return BaseReq.builder()
+            return BaseRes.builder()
                     .success(false)
                     .message("잘못된 비밀번호 입니다.")
                     .build();
         }
 
-        return BaseReq.builder()
+        return BaseRes.builder()
                 .success(true)
                 .message("'" + user.getName() + "' 님 환영합니다.")
                 .build();
@@ -100,26 +120,26 @@ public class UserController {
     }
 
     @PostMapping("/find-email")
-    public BaseReq findUserEmail(@RequestBody FindUserEmailReq req) {
+    public BaseRes findUserEmail(@RequestBody FindUserEmailReq req) {
         Optional<User> optionalUser = userService.findUserByUserIdAndTelNum(req.getUserId(), req.getTelNum());
         if (optionalUser.isEmpty()) {
-            return BaseReq.builder()
+            return BaseRes.builder()
                     .success(false)
                     .message("존재하지 않는 유저입니다.")
                     .build();
         }
         User user = optionalUser.get();
-        return BaseReq.builder()
+        return BaseRes.builder()
                 .success(true)
                 .message(user.getEmail())
                 .build();
     }
 
     @PostMapping("/find-password")
-    public BaseReq findUserPassword(@RequestBody FindUserPasswordReq req) {
+    public BaseRes findUserPassword(@RequestBody FindUserPasswordReq req) {
         Optional<User> optionalUser = userService.findUserByEmailAndUserIdAndTelNum(req.getEmail(), req.getUserId(), req.getTelNum());
         if (optionalUser.isEmpty()) {
-            return BaseReq.builder()
+            return BaseRes.builder()
                     .success(false)
                     .message("존재하지 않는 유저입니다.")
                     .build();
@@ -134,7 +154,7 @@ public class UserController {
         // 유저 메일로 변경된 패스워드 보내기
         sendMail(user.getEmail(), randomStr);
 
-        return BaseReq.builder()
+        return BaseRes.builder()
                 .success(true)
                 .message(user.getEmail() + " 로 임시 패스워드 전송")
                 .build();

@@ -22,4 +22,8 @@ public class Address {
         this.dong = dong;
         this.detail = detail;
     }
+
+    public String toWholeAddress() {
+        return si + " " + gu + " " + dong + " " + detail;
+    }
 }
