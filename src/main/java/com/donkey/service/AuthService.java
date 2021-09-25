@@ -1,7 +1,9 @@
 package com.donkey.service;
 
+import com.donkey.domain.user.AuthProvider;
 import com.donkey.domain.user.User;
 import com.donkey.repository.UserRepository;
+import com.donkey.util.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,9 +18,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class UserService {
+public class AuthService {
 
     private final UserRepository userRepository;
+    private final RedisUtil redisUtil;
 
     @Transactional
     public Long save(User user) {
@@ -56,5 +59,10 @@ public class UserService {
     @Transactional
     public void updateTemporaryPassword(Long id, String password) {
         userRepository.updatePassword(id, password);
+    }
+
+    @Transactional
+    public void modifyAuthProvider(Long id, AuthProvider authProvider) {
+        userRepository.updateAuthProvider(id, authProvider);
     }
 }

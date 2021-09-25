@@ -47,7 +47,7 @@ public class User extends BaseEntity {
     private UserType userType = UserType.UNCERTIFIED;
 
     @Enumerated(EnumType.STRING)
-    private AuthProvider authProvider = AuthProvider.local;
+    private AuthProvider authProvider = AuthProvider.none;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "university_id")
@@ -118,6 +118,10 @@ public class User extends BaseEntity {
 
     public void universityCertified() {
         this.userType = UserType.CERTIFIED;
+    }
+
+    public void updateAuthProvider(AuthProvider authProvider) {
+        this.authProvider = authProvider;
     }
 
 

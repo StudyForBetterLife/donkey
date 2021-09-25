@@ -5,7 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 public enum AuthProvider {
-    local,
+    none,
+    donkey,
     apple,
     kakao,
     google,

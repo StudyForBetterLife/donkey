@@ -5,10 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class FindUserEmailReq {
+@AllArgsConstructor
+public class TokenReissueReq {
 
-    private String userId;
-    private String telNum;
+    private String email;
+    private String accessToken;
+    private String refreshToken;
 }

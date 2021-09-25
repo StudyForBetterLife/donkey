@@ -31,14 +31,25 @@ spring:
       initialize-schema: always
 
   thymeleaf:
-      prefix: classpath:/templates/
-      suffix: .html
-      mode: HTML
-      encoding: UTF-8
-      check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    check-template-location: true
+
+  jwt:
+    secret: ehd21zldo6n8key9rjf0xle4hd234zlW567kddlqslek
+
+  cache:
+    type: redis
+
+  redis:
+    host: localhost # donkey 서버
+    port: 6379
+    password: donkey
 
 logging.level:
-  org.hibernate.type.descriptor.sql: TRACE
+  org.hibernate.type.descriptor.sql: error
   org.springframework:
     security: error
   root: info
