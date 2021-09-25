@@ -1,5 +1,6 @@
 package com.donkey.repository;
 
+import com.donkey.domain.user.AuthProvider;
 import com.donkey.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -21,4 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("update User u set u.password = :pass where u.id = :id")
     void updatePassword(@Param("id") Long id, @Param("pass") String password);
+
+    @Modifying
+    @Query("update User u set u.authProvider = :auth where u.id = :id")
+    void updateAuthProvider(@Param("id") Long id, @Param("auth") AuthProvider authProvider);
 }

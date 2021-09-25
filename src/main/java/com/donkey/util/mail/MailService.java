@@ -1,6 +1,5 @@
 package com.donkey.util.mail;
 
-import com.donkey.util.mail.MailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -22,9 +21,8 @@ public class MailService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-
-        helper.setSubject("[당나귀] 임시 패스워드입니다.");
-        helper.setTo(mailDto.getAddress());
+        helper.setTo(mailDto.getTo());
+        helper.setSubject(mailDto.getSubject());
 
         Context context = new Context();
         context.setVariable("user_name", mailDto.getUserName());
@@ -34,4 +32,18 @@ public class MailService {
         mailSender.send(message);
     }
 
+    public void sendEmailForEmailVerification(MailDto mailDto) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(mailDto.getTo());
+        helper.setSubject(mailDto.getSubject());
+
+        Context context = new Context();
+        context.setVariable("user_name", mailDto.getUserName());
+        context.setVariable("url_string", mailDto.getToken());
+        helper.setText(templateEngine.process("mail-verify", context),true);
+
+        mailSender.send(message);
+    }
 }

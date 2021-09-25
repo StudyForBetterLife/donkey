@@ -7,13 +7,15 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MailDto {
-    private String address;
+    private String to;
+    private String subject;
     private String userName;
     private String token;
 
     @Builder
-    public MailDto(String address, String userName, String token) {
-        this.address = address;
+    public MailDto(String to, String subject, String userName, String token) {
+        this.to = to;
+        this.subject = subject;
         this.userName = userName;
         this.token = token;
     }
